@@ -13,6 +13,7 @@
     const txtPasswordLogin = document.getElementById("passwordLogIn");
     const btnLogin = document.getElementById("buttonLogin");
     const btnSignUp = document.getElementById("buttonSignUp");
+    const btnLogOut = document.getElementById("buttonLogOut");
     const txtEmailSignUp = document.getElementById("e-mailSignUp");
     const txtPasswordSignUp = document.getElementById("passwortSignUp");
     //Añnadir evento login
@@ -35,6 +36,20 @@
         //Sign in 
         const promise = auth.createUserWithEmailAndPassword(email, pass);
         promise.catch(e => console.log(e.message));
+    });
+
+    btnLogOut.addEventListener("click", e =>{
+        firebase.auth().signOut();
+    });
+    //Añadir uun listener en tiempo real 
+    firebase.auth().onAuthStateChanged( firebaseUser =>{
+        if(firebaseUser){
+            console.log(firebaseUser);
+            btnLogOut.classList.remove("hide");
+        }else{
+            console.log("No logueado");
+            btnLogOut.classList.add("hide");
+        }
     });
 }());
 
