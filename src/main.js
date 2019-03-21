@@ -51,3 +51,5 @@ document.getElementById("link").addEventListener("click", hide);
 //     console.log(user, password)
 //     // window.data.(user, password);
 // }
+// Añadir un listener en tiempo real 
+
