@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <title>Parentips</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="styles.css" />
+        <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
     </head>
     <body>
         <h1>HOLA</h1>
         <main>
-
+            <section id="logIn">
+                <input id="e-mailLogIn" type="email" autofocus placeholder="E-mail"><br>
+                <input id="passwordLogIn" type="password" autofocus placeholder="Password"><br>
+                <button class="buttonRegister" id="buttonLogin">Login</button><br>
+                <a href="#signUp" id="link">You do not have an account?</a>
+            </section>
+            <section name="signUp" id="signUp" >
+                <input id="nameSignUp" type="text" autofocus placeholder="First name"><br>
+                <input id="lastNameSignUp" type="text" autofocus placeholder="Last name"><br>
+                <input id="e-mailSignUp" type="email" autofocus placeholder="E-mail"><br>
+                <input id="passwortSignUp" type="password" autofocus placeholder="Passwrod"><br>
+                <button class="buttonRegister" id="buttonSignUp">Sign Up</button>
+            </section>
+            <section id="LogOut">
+                <button id="buttonLogOut" class="hide">Log Out</button>
+            </section>
         </main>
         <script type="text/javascript" src="data.js"></script>
         <script type="text/javascript" src="main.js"></script>
+        <!-- <script>
+        // Initialize Firebase
+        
+        </script> -->
     </body>
 </html>
