@@ -24,7 +24,12 @@
         const auth = firebase.auth();
         //Sign in 
         const promise = auth.signInWithEmailAndPassword(email, pass);
-        promise.catch(e => console.log(e.message));
+        promise.catch(e => {
+            document.getElementById("messageEmail").style.display = "block";
+            const message = "Este correo no está registrado";
+            document.getElementById("messageEmail").innerHTML = message;
+            console.log(e.message);
+        });
     });
     //Añadir evento Sign Up
     btnSignUp.addEventListener("click", e=>{
@@ -35,7 +40,12 @@
         const auth = firebase.auth();
         //Sign in 
         const promise = auth.createUserWithEmailAndPassword(email, pass);
-        promise.catch(e => console.log(e.message));
+        promise.catch(e => {
+            document.getElementById("messageEmailSU").style.display = "block";
+            const message = "Este correo ya está registrado";
+            document.getElementById("messageEmailSU").innerHTML = message;
+            console.log(e.message);
+        });
     });
 
     btnLogOut.addEventListener("click", e =>{
@@ -54,15 +64,20 @@
 }());
 
 
-const hide = () =>{
+const hideLogIn = () =>{
     document.getElementById("signUp").style.display = "block";
     document.getElementById("logIn").style.display = "none";
 };
-document.getElementById("link").addEventListener("click", hide);
+document.getElementById("linkSignUp").addEventListener("click", hideLogIn);
 
-// const checkFirebase = () =>{
-//     const user = document.getElementById("e-mailLogIn").value;
-//     const password = document.getElementById("passwordLogIn").value;
-//     console.log(user, password)
-//     // window.data.(user, password);
-// }
+const hideSignOut = () =>{
+    document.getElementById("signUp").style.display = "none";
+    document.getElementById("logIn").style.display = "block";
+};
+document.getElementById("linkLogIn").addEventListener("click", hideSignOut);
+
+// let i=0;
+// document.getElementById("heart").addEventListener("click", () => {
+//     i++;
+//     document.getElementById("hearti").innerHTML = i;
+// });
