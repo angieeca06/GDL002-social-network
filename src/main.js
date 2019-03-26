@@ -1,4 +1,6 @@
-(function() {
+
+
+`(function() {`
     const config = {
         apiKey: "AIzaSyBImEucNY2TK77Vvs1dmdQYYGi8jduZ4bk",
         authDomain: "parentips-93346.firebaseapp.com",
@@ -14,10 +16,15 @@
     const btnLogin = document.getElementById("buttonLogin");
     const btnSignUp = document.getElementById("buttonSignUp");
     const btnLogOut = document.getElementById("buttonLogOut");
+    const btnSave = document.getElementById ("buttonSave");
     const txtEmailSignUp = document.getElementById("e-mailSignUp");
-    const txtPasswordSignUp = document.getElementById("passwortSignUp");
+    const txtPasswordSignUp = document.getElementById("passwordSignUp");
+    const nameSignUp = document.getElementById("nameSignUp");
+    const lastNameSignUp = document.getElementById("lastNameSignUp");
+
+    
     //Añnadir evento login
-    btnLogin.addEventListener("click", e=>{
+    btnLogin.addEventListener("click", (e) =>{
         //Obtener email y pass
         const email = txtEmailLogin.value;
         const pass = txtPasswordLogin.value;
@@ -25,6 +32,7 @@
         //Sign in 
         const promise = auth.signInWithEmailAndPassword(email, pass);
         promise.catch(e => console.log(e.message));
+       
     });
     //Añadir evento Sign Up
     btnSignUp.addEventListener("click", e=>{
@@ -38,6 +46,15 @@
         promise.catch(e => console.log(e.message));
     });
 
+    btnSave.addEventListener("click", e =>{
+        firebase.database().ref("profile")
+        .set ({
+            nombre: nameSignUp.value,
+            apellido: lastNameSignUp.value,
+            correo: txtEmailSignUp.value,
+        });
+    });
+
     btnLogOut.addEventListener("click", e =>{
         firebase.auth().signOut();
     });
@@ -46,23 +63,24 @@
         if(firebaseUser){
             console.log(firebaseUser);
             btnLogOut.classList.remove("hide");
+            btnSave.classList.remove("hide");
         }else{
             console.log("No logueado");
             btnLogOut.classList.add("hide");
+            btnSave.classList.add("hide");
         }
     });
-}());
+`});`
 
 
-const hide = () =>{
+const hideLogIn = () =>{
     document.getElementById("signUp").style.display = "block";
     document.getElementById("logIn").style.display = "none";
 };
-document.getElementById("link").addEventListener("click", hide);
+document.getElementById("linkSignUp").addEventListener("click", hideLogIn);
 
-// const checkFirebase = () =>{
-//     const user = document.getElementById("e-mailLogIn").value;
-//     const password = document.getElementById("passwordLogIn").value;
-//     console.log(user, password)
-//     // window.data.(user, password);
-// }
+const hideSignOut = () =>{
+    document.getElementById("signUp").style.display = "none";
+    document.getElementById("logIn").style.display = "block";
+};
+document.getElementById("linkLogIn").addEventListener("click", hideSignOut);

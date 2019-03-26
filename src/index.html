@@ -3,28 +3,36 @@
     <head>
         <title>Parentips</title>
         <link rel="stylesheet" href="styles.css" />
-        <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
     </head>
     <body>
-        <h1>HOLA</h1>
         <main>
-            <section id="logIn">
+            <section name="logIn" id="logIn">
                 <input id="e-mailLogIn" type="email" autofocus placeholder="E-mail"><br>
+                <a id="messageEmail" class="message"></a>
                 <input id="passwordLogIn" type="password" autofocus placeholder="Password"><br>
-                <button class="buttonRegister" id="buttonLogin">Login</button><br>
-                <a href="#signUp" id="link">You do not have an account?</a>
+                <button class="buttonRegister" id="buttonLogin">Registrarme</button><br>
+                <a href="#signUp" id="linkSignUp" class="links">No tienes una cuenta? <br> Registrate¡</a>
+                <!-- <div id="heart" class="heart"></div>
+                <div id="hearti"></div> -->
             </section>
             <section name="signUp" id="signUp" >
                 <input id="nameSignUp" type="text" autofocus placeholder="First name"><br>
-                <input id="lastNameSignUp" type="text" autofocus placeholder="Last name"><br>
+                <input id="lastNameSignUp" type="text" autofocus placeholder="apellido"><br>
                 <input id="e-mailSignUp" type="email" autofocus placeholder="E-mail"><br>
-                <input id="passwortSignUp" type="password" autofocus placeholder="Passwrod"><br>
-                <button class="buttonRegister" id="buttonSignUp">Sign Up</button>
+                <a id="messageEmailSU" class="message"></a>
+                <input id="passwordSignUp" type="password" autofocus placeholder="Password"><br>
+                <button class="buttonRegister" id="buttonSignUp">Ingresar</button>
+                <a href="#logIn" id="linkLogIn" class="links">Ya tienes una cuenta?</a>
+            </section>
+            <section>
+                <button id="buttonSave" class="hide">Guardar</button>
             </section>
             <section id="LogOut">
-                <button id="buttonLogOut" class="hide">Log Out</button>
+                <button id="buttonLogOut" class="hide">Cerrar sesión</button>
             </section>
         </main>
+       
+        <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
         <script type="text/javascript" src="data.js"></script>
         <script type="text/javascript" src="main.js"></script>
         <!-- <script>
