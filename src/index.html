@@ -7,11 +7,13 @@
     </head>
     <body>
         <main>
-            <section name="logIn" id="logIn">
+            <section name="logIn" id="logIn" class="LogIn">
+                <img src="C:\Users\PERSONAL\Laboratoria\GDL002-social-network\src\Imges\Logo.png">
                 <input id="e-mailLogIn" type="email" autofocus placeholder="E-mail"><br>
                 <a id="messageEmail" class="message"></a>
                 <input id="passwordLogIn" type="password" autofocus placeholder="Password"><br>
-                <button class="buttonRegister" id="buttonLogin">Registrarme</button><br>
+                <button class="buttonRegister" id="buttonLogin">Ingresar</button>
+                <button id="loginGoogle">Inicia con Google</button><br>
                 <a href="#signUp" id="linkSignUp" class="links">No tienes una cuenta? <br> Registrate¡</a>
                 <!-- <div id="heart" class="heart"></div>
                 <div id="hearti"></div> -->
@@ -22,13 +24,31 @@
                 <input id="e-mailSignUp" type="email" autofocus placeholder="E-mail"><br>
                 <a id="messageEmailSU" class="message"></a>
                 <input id="passwortSignUp" type="password" autofocus placeholder="Passwrod"><br>
-                <button class="buttonRegister" id="buttonSignUp">Ingresar</button>
+                <button class="buttonRegister" id="buttonSignUp">Registrarme</button>
+
+                <div id="root"></div>
                 <a href="#logIn" id="linkLogIn" class="links">Ya tienes una cuenta?</a>
             </section>
             <section id="LogOut">
                 <button id="buttonLogOut" class="hide">Cerrar sesión</button>
             </section>
         </main>
+        <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+        </script>
+        <!-- <script>
+        var config = {
+            apiKey: "AIzaSyBImEucNY2TK77Vvs1dmdQYYGi8jduZ4bk",
+            authDomain: "parentips-93346.firebaseapp.com",
+            databaseURL: "https://parentips-93346.firebaseio.com",
+            projectId: "parentips-93346",
+            storageBucket: "parentips-93346.appspot.com",
+            messagingSenderId: "77351177292"
+        };
+        firebase.initializeApp(config);
+        </script> -->
         <script type="text/javascript" src="data.js"></script>
         <script type="text/javascript" src="main.js"></script>
     </body>
