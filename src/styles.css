@@ -1,3 +1,7 @@
+*{
+  background-color: #FCFDF7;
+}
+
 #signUp{
     display: none;
 }
@@ -5,3 +9,47 @@
 .hide{
     display: none;
 }
+
+.message{
+    display: none;
+}
+
+.heart {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    /* top: 50%; */
+    transform: translate(-50%, -50%);
+    background: url(https://cssanimation.rocks/images/posts/steps/heart.png) no-repeat;
+    background-position: 0 0;
+    cursor: pointer;
+    animation: fave-heart 1s steps(28);
+  }
+  .heart:hover {
+    background-position: -2800px 0;
+    transition: background 1s steps(28);
+  }
+  @keyframes fave-heart {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -2800px 0;
+    }
+  }
+
+.LogIn{
+  /* box-align: center; */
+  margin-right: 300px;
+  margin-left: 300px;
+  margin-top: 200px;
+  margin-bottom: 400px;
+  /* background-color:#FCFDF7; */
+  border: 3px;
+}
+img{
+position: center;
+mix-blend-mode: darken;
+}
+  
