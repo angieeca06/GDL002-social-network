@@ -58,12 +58,12 @@ const lastNameUser = document.getElementById("lastNameSignUp");
     //Añadir uun listener en tiempo real 
     firebase.auth().onAuthStateChanged( firebaseUser =>{
         if(firebaseUser){
-            console.log(firebaseUser);
+            // console.log(firebaseUser);
             btnLogOut.classList.remove("hide");
             document.getElementById("signUp").style.display = "none";
             document.getElementById("logIn").style.display = "none";
         }else{
-            console.log("No logueado");
+            // console.log("No logueado");
             btnLogOut.classList.add("hide");
         }
     });
@@ -100,10 +100,20 @@ document.getElementById("linkLogIn").addEventListener("click", hideSignOut);
 //Login con google
 
 var provider = new firebase.auth.GoogleAuthProvider();
-// provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-$("#loginGoogle").click(function(){
+document.getElementById("loginGoogle").addEventListener("click", function(){
     firebase.auth().signInWithPopup(provider).then(function(result){
         console.log(result.user);
+        const name = result.user.displayName;
+        const email = result.user.email;
+        const photo = result.user.photoURL;
+        showProfile(name, email, photo);
+    return result.user;
     });
-
 })
+
+
+const showProfile = (name, email, photo) =>{
+    document.getElementById("profile").innerHTML = ` <img src="${photo}"> 
+    ${name}
+    ${email}`
+}
