@@ -46,13 +46,16 @@
         if(firebaseUser){
             console.log(firebaseUser);
             btnLogOut.classList.remove("hide");
+              
         }else{
             console.log("No logueado");
             btnLogOut.classList.add("hide");
         }
     });
 }());
-
+ // ---
+ document.getElementById("searchResult").innerHTML = FirebaseUser.name 
+ // ---
 
 const hide = () =>{
     document.getElementById("signUp").style.display = "block";
