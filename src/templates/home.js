@@ -1,4 +1,4 @@
-const sectionLogIn = 
+let homePage = 
 ` <section class="sectionLogIn"> 
     <div name="logIn" id="logIn" class="LogIn">
         <img src="Imges\Logo.png"><br>
@@ -11,10 +11,10 @@ const sectionLogIn =
         <!-- <div id="heart" class="heart"></div>
         <div id="hearti"></div> -->
     </div>
-</section>`;
+</section>
 
 
-` <section class="sectionSingUp">
+<section class="sectionSingUp">
     <div name="signUp" id="signUp" >
         <input id="nameSignUp" type="text" autofocus placeholder="First name"><br>
         <input id="lastNameSignUp" type="text" autofocus placeholder="Last name"><br>
@@ -28,29 +28,3 @@ const sectionLogIn =
 </section>`;
 
 
-`  <section class="sectionLogOut">
-        <div id="LogOut">
-                        <div id="profile"></div>
-            <button id="buttonLogOut" class="hide">Cerrar sesión</button>
-        </div>
-  </section>`;
-
-
-``;
-``;
-``;
-
-const routes = {
-    "/": sectionLogIn,
-    "#": sectionLogIn,sectionSingUp,
-    "#": sectionSingUp,
-    "#": sectionLogOut,
-};
-
-let contentDiv = document.getElementById("content");
-
-window.addEventListener("hashchange", () => {
-    contentDiv.innerHTML = routes[window.location.hash];
-});
-
-contentDiv.innerHTML = routes[window.location.hash];
