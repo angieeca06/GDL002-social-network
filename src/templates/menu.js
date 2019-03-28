@@ -1,3 +1,4 @@
+let menu =
 `  <section class="sectionLogOut">
 <div id="LogOut">
     <button id="buttonLogOut" class="hide">Cerrar sesión</button>

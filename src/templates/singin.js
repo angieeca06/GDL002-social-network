@@ -1,4 +1,4 @@
-let homePage = 
+let homepage = 
 ` <section class="sectionLogIn"> 
     <div name="logIn" id="logIn" class="LogIn">
         <img src="Imges\Logo.png"><br>
@@ -26,5 +26,3 @@ let homePage =
         <a href="#logIn" id="linkLogIn" class="links">Ya tienes una cuenta?</a>
     </div>
 </section>`;
-
-
