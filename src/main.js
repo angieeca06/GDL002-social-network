@@ -1,73 +1,111 @@
-(function() {
-    const config = {
-        apiKey: "AIzaSyBImEucNY2TK77Vvs1dmdQYYGi8jduZ4bk",
-        authDomain: "parentips-93346.firebaseapp.com",
-        databaseURL: "https://parentips-93346.firebaseio.com",
-        projectId: "parentips-93346",
-        storageBucket: "parentips-93346.appspot.com",
-        messagingSenderId: "77351177292"
-    };
-    firebase.initializeApp(config);
-    //Obtener elementos
-    const txtEmailLogin = document.getElementById("e-mailLogIn");
-    const txtPasswordLogin = document.getElementById("passwordLogIn");
-    const btnLogin = document.getElementById("buttonLogin");
-    const btnSignUp = document.getElementById("buttonSignUp");
-    const btnLogOut = document.getElementById("buttonLogOut");
-    const txtEmailSignUp = document.getElementById("e-mailSignUp");
-    const txtPasswordSignUp = document.getElementById("passwortSignUp");
-    //Añnadir evento login
-    btnLogin.addEventListener("click", e=>{
-        //Obtener email y pass
-        const email = txtEmailLogin.value;
-        const pass = txtPasswordLogin.value;
-        const auth = firebase.auth();
-        //Sign in 
-        const promise = auth.signInWithEmailAndPassword(email, pass);
-        promise.catch(e => console.log(e.message));
-    });
-    //Añadir evento Sign Up
-    btnSignUp.addEventListener("click", e=>{
-        //Obtener email y pass
-        //TODO: comprobar que el email sea real
-        const email = txtEmailSignUp.value;
-        const pass = txtPasswordSignUp.value;
-        const auth = firebase.auth();
-        //Sign in 
-        const promise = auth.createUserWithEmailAndPassword(email, pass);
-        promise.catch(e => console.log(e.message));
-    });
+const txtEmailLogin = document.getElementById("e-mailLogIn");
+const txtPasswordLogin = document.getElementById("passwordLogIn");
+const btnLogin = document.getElementById("buttonLogin");
+const btnSignUp = document.getElementById("buttonSignUp");
+const btnLogOut = document.getElementById("buttonLogOut");
+const txtEmailSignUp = document.getElementById("e-mailSignUp");
+const txtPasswordSignUp = document.getElementById("passwortSignUp");
+const nameUser = document.getElementById("nameSignUp");
+const lastNameUser = document.getElementById("lastNameSignUp");
 
-    btnLogOut.addEventListener("click", e =>{
-        firebase.auth().signOut();
+firebase.initializeApp(window.data.config);
+//Añadir evento al boton Sign In con correo y contraseña
+btnLogin.addEventListener("click", e=>{
+    const email = txtEmailSignUp.value;
+    const pass = txtPasswordSignUp.value;
+    const auth = firebase.auth();
+    //Sign in  
+    const promise = auth.signInWithEmailAndPassword(email, pass);
+    promise.catch(e => {
+        document.getElementById("messageEmail").style.display = "block";
+        const message = e.message;
+        document.getElementById("messageEmail").innerHTML = message;
     });
-    //Añadir uun listener en tiempo real 
-    firebase.auth().onAuthStateChanged( firebaseUser =>{
-        if(firebaseUser){
-            console.log(firebaseUser);
-            btnLogOut.classList.remove("hide");
-              
-        }else{
-            console.log("No logueado");
-            btnLogOut.classList.add("hide");
-        }
+});
+//Añadir evento al boton Login con correo y contraseña
+btnSignUp.addEventListener("click", e=>{
+    const email = txtEmailSignUp.value;
+    const pass = txtPasswordSignUp.value;
+    const auth = firebase.auth();
+    //Login 
+    const promise = auth.createUserWithEmailAndPassword(email, pass);
+    promise.catch(e => {
+        document.getElementById("messageEmailSU").style.display = "block";
+        const message = e.message;
+        document.getElementById("messageEmailSU").innerHTML = message;
     });
-}());
- // ---
- document.getElementById("searchResult").innerHTML = FirebaseUser.name 
- // ---
-
-const hide = () =>{
+});
+//Añadir evento al boton de Log Out
+btnLogOut.addEventListener("click", e =>{
+    document.getElementById("logIn").style.display = "block";
+    firebase.auth().signOut();
+});
+//Añadir un listener en tiempo real y guardar data en realtime
+firebase.auth().onAuthStateChanged( firebaseUser =>{
+    if(firebaseUser){
+        let uid = firebaseUser.uid;
+        window.data.saveData(uid);
+        btnLogOut.classList.remove("hide");
+        document.getElementById("signUp").style.display = "none";
+        document.getElementById("logIn").style.display = "none";
+    }else{
+        btnLogOut.classList.add("hide");
+    }
+});
+//Limpiar y ocultar campos de Login 
+const hideLogIn = () =>{
+    txtEmailSignUp.value = "";
+    txtPasswordSignUp.value = "";
+    nameUser.value = "";
+    lastNameUser.value = "";
     document.getElementById("signUp").style.display = "block";
-    document.getElementById("logIn").style.display = "none";
+    document.getElementById("logIn").style.display = "none"; 
 };
-document.getElementById("link").addEventListener("click", hide);
+document.getElementById("linkSignUp").addEventListener("click", hideLogIn);
+//Limpiar y ocultar campos de Sign Up
+const hideSignOut = () =>{
+    txtEmailLogin.value = "";
+    txtPasswordLogin.value = "";
+    document.getElementById("signUp").style.display = "none";
+    document.getElementById("logIn").style.display = "block";
+};
+document.getElementById("linkLogIn").addEventListener("click", hideSignOut);
+//Login con google
+var provider = new firebase.auth.GoogleAuthProvider();
+document.getElementById("loginGoogle").addEventListener("click", function(){
+    firebase.auth().signInWithPopup(provider).then(function(result){
+        window.data.sendDataGoogle(result.user);
+        console.log(result.user);
+        name = result.user.displayName;
+        email = result.user.email;
+        photo = result.user.photoURL;
+        showProfile(name, email, photo);
+    return result.user;
+    });
+});
+//Funcion para mostrar la información del perfil
+const showProfile = (name, email, photo) =>{
+    document.getElementById("profile").innerHTML = ` <img src="${photo}"> 
+    ${name}
+    ${email}`
+}
 
-// const checkFirebase = () =>{
-//     const user = document.getElementById("e-mailLogIn").value;
-//     const password = document.getElementById("passwordLogIn").value;
-//     console.log(user, password)
-//     // window.data.(user, password);
-// }
-// Añadir un listener en tiempo real 
+// var db = firebase.database(); 
+// db.collection("users").add({
+//     name: name,
+//     email: email,
+//     photo: photo,
+// })
+// .then(function(docRef) {
+//     console.log("Document written with ID: ", docRef.id);
+// })
+// .catch(function(error) {
+//     console.error("Error adding document: ", error);
+// });
 
+//Función para conteo de me gusta 
+// let i=0;
+// document.getElementById("heart").addEventListener("click", () => {
+//     i++;
+//     document.getElementById("hearti").innerHTML = i;
+// });
