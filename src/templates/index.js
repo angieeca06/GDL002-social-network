@@ -1,7 +1,7 @@
 let contentDiv = document.getElementById('content');
 
 let routes = {
-  '/src/index1.html': homepage,
+  '/src/index1.html': sectionLogIn,
   //'/index1.html': homepage,
   //'/home': homepage,
   '/src/newsfeed': newsFeed,
