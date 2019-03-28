@@ -1,4 +1,5 @@
 window.data = {
+    provider: new firebase.auth.GoogleAuthProvider(),
     config: {
         apiKey: "AIzaSyBImEucNY2TK77Vvs1dmdQYYGi8jduZ4bk",
         authDomain: "parentips-93346.firebaseapp.com",
@@ -8,12 +9,12 @@ window.data = {
         messagingSenderId: "77351177292"
     },
 
-    saveData: (uid) =>{
+    saveData: (uid, name, lastName, email) =>{
         let user = {
             uid: uid,
-            name: nameUser.value,
-            lastName: lastNameUser.value,
-            email: txtEmailSignUp.value,
+            name: name,
+            lastName: lastName,
+            email: email ,
         }
         firebase.database().ref("users/" + uid)
         .set(user);

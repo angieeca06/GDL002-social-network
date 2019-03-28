@@ -10,13 +10,18 @@ const lastNameUser = document.getElementById("lastNameSignUp");
 
 firebase.initializeApp(window.data.config);
 //Añadir evento al boton Sign In con correo y contraseña
-btnLogin.addEventListener("click", e=>{
-    const email = txtEmailSignUp.value;
-    const pass = txtPasswordSignUp.value;
-    const auth = firebase.auth();
+btnLogin.addEventListener("click", e =>{
+    const email = txtEmailLogin.value;
+    // console.log(email);
+    const pass = txtPasswordLogin.value;
+    // const auth = firebase.auth();
     //Sign in  
-    const promise = auth.signInWithEmailAndPassword(email, pass);
-    promise.catch(e => {
+    firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(user =>{
+        // window.data.saveData(user.uid);
+        // console.log(user.uid);
+    })
+    .catch(e => {
         document.getElementById("messageEmail").style.display = "block";
         const message = e.message;
         document.getElementById("messageEmail").innerHTML = message;
@@ -26,10 +31,18 @@ btnLogin.addEventListener("click", e=>{
 btnSignUp.addEventListener("click", e=>{
     const email = txtEmailSignUp.value;
     const pass = txtPasswordSignUp.value;
-    const auth = firebase.auth();
+    const name = nameUser.value;
+    const lastName = lastNameUser.value;
+    // const auth = firebase.auth();
     //Login 
-    const promise = auth.createUserWithEmailAndPassword(email, pass);
-    promise.catch(e => {
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .then(user =>{
+        console.log(user);
+        window.data.saveData(user.uid, name, lastName, user.email);
+    })
+    // console.log(promise.i.u);
+    // window.data.saveData(uid);
+    .catch(e => {
         document.getElementById("messageEmailSU").style.display = "block";
         const message = e.message;
         document.getElementById("messageEmailSU").innerHTML = message;
@@ -44,7 +57,8 @@ btnLogOut.addEventListener("click", e =>{
 firebase.auth().onAuthStateChanged( firebaseUser =>{
     if(firebaseUser){
         let uid = firebaseUser.uid;
-        window.data.saveData(uid);
+        // window.data.saveData(uid, lastNameUser, firebaseUser.email);
+        // window.data.sendDataGoogle(firebaseUser);
         btnLogOut.classList.remove("hide");
         document.getElementById("signUp").style.display = "none";
         document.getElementById("logIn").style.display = "none";
@@ -71,9 +85,8 @@ const hideSignOut = () =>{
 };
 document.getElementById("linkLogIn").addEventListener("click", hideSignOut);
 //Login con google
-var provider = new firebase.auth.GoogleAuthProvider();
 document.getElementById("loginGoogle").addEventListener("click", function(){
-    firebase.auth().signInWithPopup(provider).then(function(result){
+    firebase.auth().signInWithPopup(window.data.provider).then(function(result){
         window.data.sendDataGoogle(result.user);
         console.log(result.user);
         name = result.user.displayName;
@@ -85,10 +98,27 @@ document.getElementById("loginGoogle").addEventListener("click", function(){
 });
 //Funcion para mostrar la información del perfil
 const showProfile = (name, email, photo) =>{
-    document.getElementById("profile").innerHTML = ` <img src="${photo}"> 
+    document.getElementById("profile").innerHTML = ` <img  src="${photo}"> 
     ${name}
     ${email}`
 }
+
+//mostrar modal 
+const showModal =() =>{
+    var modal = document.getElementById("modal");
+    modal.style.marginTop = "100px";
+    modal.style.left = ((document.body.clientWidth-350) / 2) +  "px";
+    modal.style.display = "block";
+}
+//Evento del botón de Create post 
+document.getElementById("createPost").addEventListener("click", showModal);
+//Ocultar modal 
+const hideModal = () =>{
+    document.getElementById("modal").style.display = "none";
+    // var publicar = document.getElementById("");
+    // publicar.style.display = "none";
+}
+document.getElementById("toPost").addEventListener("click", hideModal);
 
 // var db = firebase.database(); 
 // db.collection("users").add({
