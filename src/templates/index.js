@@ -18,4 +18,12 @@ window.onpopstate = () => {
 //   contentDiv.innerHTML = routes[pathName];
 // }
 
-contentDiv.innerHTML = routes[window.location.pathname];
+// contentDiv.innerHTML = routes[window.location.pathname];
+
+// let contentDiv = document.getElementById('content');
+
+// window.addEventListener("hashchange", () => {
+//     contentDiv.innerHTML = routes[window.location.hash];
+// });
+
+// contentDiv.innerHTML = routes[window.location.hash];
