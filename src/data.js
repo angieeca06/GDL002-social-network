@@ -1,5 +1,6 @@
 window.data = {
     provider: new firebase.auth.GoogleAuthProvider(),
+    providerFace: new firebase.auth.FacebookAuthProvider(),
     config: {
         apiKey: "AIzaSyBImEucNY2TK77Vvs1dmdQYYGi8jduZ4bk",
         authDomain: "parentips-93346.firebaseapp.com",
@@ -9,12 +10,12 @@ window.data = {
         messagingSenderId: "77351177292"
     },
 
-    saveData: (uid, name, lastName, email) =>{
+    saveData: (uid, name, email) =>{
         let user = {
             uid: uid,
             name: name,
-            lastName: lastName,
             email: email ,
+            photo: "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg",
         }
         firebase.database().ref("users/" + uid)
         .set(user);
@@ -30,18 +31,4 @@ window.data = {
         firebase.database().ref("users/" + user.uid)
         .set(users);
     }
-
-    // firebase: (user) => {
-    //     firebase.auth().onAuthStateChanged(function(user, password) {
-    //         if (user) {
-    //             // User is signed in
-    //             var email = user.email;
-    //             // ...
-    //         } else {
-    //             // User is not signed in
-    //             // ...
-    //         }
-    //     });
-    //     firebase.auth().signInWithEmailAndPassword(email, password);
-    // }
-}
+};
