@@ -9,22 +9,23 @@ const nameUser = document.getElementById("nameSignUp");
 const lastNameUser = document.getElementById("lastNameSignUp");
 
 firebase.initializeApp(window.data.config);
+const db = firebase.database()
 //Añadir evento al boton Sign In con correo y contraseña
 btnLogin.addEventListener("click", e =>{
     const email = txtEmailLogin.value;
-    const nameComplete = nameUser.value + " " + lastNameUser.value;
     const pass = txtPasswordLogin.value;
     //Sign in  
     firebase.auth().signInWithEmailAndPassword(email, pass)
-    .then(user =>{
-        const nombre = firebase.database().ref("users/" + user.uid);
-        nombre.on("value", function(snapshot){
-            console.log(snapshot);
+    .then((user) => {
+        db.ref("/users/" + user.uid).once("value")
+        .then(function(snapshot) {
+            var username = (snapshot.val() && snapshot.val().name)  || 'Anonymous';
+            name = username;
+            email1 = email;
+            photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
+            showProfile(name, email1, photo);
         });
-        name = nameComplete;
-        email1 = email;
-        photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
-        showProfile(name, email1, photo);
+       
     })
     .catch(e => {
         document.getElementById("messageEmail").style.display = "block";
@@ -44,6 +45,7 @@ btnSignUp.addEventListener("click", e=>{
         name = nameComplete;
         email1 = email;
         photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
+        post = null;
         showProfile(name, email1, photo);
     })
     .catch(e => {
@@ -111,7 +113,7 @@ document.getElementById("loginFacebook").addEventListener("click", function(){
 });
 //Funcion para mostrar la información del perfil
 const showProfile = (name, email, photo) =>{
-    document.getElementById("profile").innerHTML = ` <img width = "100px" src="${photo}"> 
+    document.getElementById("profile").innerHTML = ` <img  src="${photo}"> 
     ${name}
     ${email}`;
 };
@@ -129,6 +131,12 @@ const hideModal = () =>{
     document.getElementById("modal").style.display = "none";
 };
 document.getElementById("toPost").addEventListener("click", hideModal);
+
+document.getElementById("toPost").addEventListener("click", () =>{
+    const userId = firebase.auth().currentUser.uid;
+    const messagePost = document.getElementById("post").value;
+    db.ref("users/" + userId).child("post").push().set(messagePost);
+})
 
 // var db = firebase.database(); 
 // db.collection("users").add({
