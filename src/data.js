@@ -19,6 +19,8 @@ window.data = {
         }
         firebase.database().ref("users/" + uid)
         .set(user);
+        // firebase.database().collection("users/" + user.uid +  "Post/")
+        // })
     },
 
     sendDataGoogle: (user) =>{
