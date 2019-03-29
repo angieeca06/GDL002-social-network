@@ -45,6 +45,7 @@ btnSignUp.addEventListener("click", e=>{
         name = nameComplete;
         email1 = email;
         photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
+        post = null;
         showProfile(name, email1, photo);
     })
     .catch(e => {
@@ -130,6 +131,12 @@ const hideModal = () =>{
     document.getElementById("modal").style.display = "none";
 };
 document.getElementById("toPost").addEventListener("click", hideModal);
+
+document.getElementById("toPost").addEventListener("click", () =>{
+    const userId = firebase.auth().currentUser.uid;
+    const messagePost = document.getElementById("post").value;
+    db.ref("users/" + userId).child("post").push().set(messagePost);
+})
 
 // var db = firebase.database(); 
 // db.collection("users").add({

@@ -16,11 +16,14 @@ window.data = {
             name: name,
             email: email ,
             photo: "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg",
+            post: "null",
         }
         firebase.database().ref("users/" + uid)
         .set(user);
-        // firebase.database().collection("users/" + user.uid +  "Post/")
-        // })
+        // firebase.database().collection("users/" + user.uid +  "Post/").add({
+        //     Contenido: "Hola",
+        //     Fecha: 29/03/2019
+        // });
     },
 
     sendDataGoogle: (user) =>{
@@ -28,7 +31,8 @@ window.data = {
             uid: user.uid,
             name: user.displayName,
             email: user.email,
-            photo: user.photoURL
+            photo: user.photoURL,
+            post: "null",
         }
         firebase.database().ref("users/" + user.uid)
         .set(users);
