@@ -10,13 +10,23 @@ const lastNameUser = document.getElementById("lastNameSignUp");
 
 firebase.initializeApp(window.data.config);
 //Añadir evento al boton Sign In con correo y contraseña
-btnLogin.addEventListener("click", e=>{
-    const email = txtEmailSignUp.value;
-    const pass = txtPasswordSignUp.value;
-    const auth = firebase.auth();
+btnLogin.addEventListener("click", e =>{
+    const email = txtEmailLogin.value;
+    const nameComplete = nameUser.value + " " + lastNameUser.value;
+    const pass = txtPasswordLogin.value;
     //Sign in  
-    const promise = auth.signInWithEmailAndPassword(email, pass);
-    promise.catch(e => {
+    firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(user =>{
+        const nombre = firebase.database().ref("users/" + user.uid);
+        nombre.on("value", function(snapshot){
+            console.log(snapshot);
+        });
+        name = nameComplete;
+        email1 = email;
+        photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
+        showProfile(name, email1, photo);
+    })
+    .catch(e => {
         document.getElementById("messageEmail").style.display = "block";
         const message = e.message;
         document.getElementById("messageEmail").innerHTML = message;
@@ -26,10 +36,17 @@ btnLogin.addEventListener("click", e=>{
 btnSignUp.addEventListener("click", e=>{
     const email = txtEmailSignUp.value;
     const pass = txtPasswordSignUp.value;
-    const auth = firebase.auth();
+    const nameComplete = nameUser.value + " " + lastNameUser.value;
     //Login 
-    const promise = auth.createUserWithEmailAndPassword(email, pass);
-    promise.catch(e => {
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .then(user =>{
+        window.data.saveData(user.uid, nameComplete, user.email);
+        name = nameComplete;
+        email1 = email;
+        photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
+        showProfile(name, email1, photo);
+    })
+    .catch(e => {
         document.getElementById("messageEmailSU").style.display = "block";
         const message = e.message;
         document.getElementById("messageEmailSU").innerHTML = message;
@@ -43,14 +60,12 @@ btnLogOut.addEventListener("click", e =>{
 //Añadir un listener en tiempo real y guardar data en realtime
 firebase.auth().onAuthStateChanged( firebaseUser =>{
     if(firebaseUser){
-        let uid = firebaseUser.uid;
-        window.data.saveData(uid);
         btnLogOut.classList.remove("hide");
         document.getElementById("signUp").style.display = "none";
         document.getElementById("logIn").style.display = "none";
     }else{
         btnLogOut.classList.add("hide");
-    }
+    };
 });
 //Limpiar y ocultar campos de Login 
 const hideLogIn = () =>{
@@ -71,9 +86,8 @@ const hideSignOut = () =>{
 };
 document.getElementById("linkLogIn").addEventListener("click", hideSignOut);
 //Login con google
-var provider = new firebase.auth.GoogleAuthProvider();
 document.getElementById("loginGoogle").addEventListener("click", function(){
-    firebase.auth().signInWithPopup(provider).then(function(result){
+    firebase.auth().signInWithPopup(window.data.provider).then(function(result){
         window.data.sendDataGoogle(result.user);
         console.log(result.user);
         name = result.user.displayName;
@@ -83,12 +97,38 @@ document.getElementById("loginGoogle").addEventListener("click", function(){
     return result.user;
     });
 });
+//Login con Facebook
+document.getElementById("loginFacebook").addEventListener("click", function(){
+    firebase.auth().signInWithPopup(window.data.providerFace).then((result) =>{
+        window.data.sendDataGoogle(result.user);
+        console.log(result.user);
+        const name = result.user.displayName;
+        const email = result.user.email;
+        const photo = result.user.photoURL;
+        showProfile(name, email, photo);
+        return result.user;
+    });
+});
 //Funcion para mostrar la información del perfil
 const showProfile = (name, email, photo) =>{
-    document.getElementById("profile").innerHTML = ` <img src="${photo}"> 
+    document.getElementById("profile").innerHTML = ` <img width = "100px" src="${photo}"> 
     ${name}
-    ${email}`
-}
+    ${email}`;
+};
+//mostrar modal 
+const showModal =() =>{
+    var modal = document.getElementById("modal");
+    modal.style.marginTop = "100px";
+    modal.style.left = ((document.body.clientWidth-350) / 2) +  "px";
+    modal.style.display = "block";
+};
+//Evento del botón de Create post 
+document.getElementById("createPost").addEventListener("click", showModal);
+//Ocultar modal 
+const hideModal = () =>{
+    document.getElementById("modal").style.display = "none";
+};
+document.getElementById("toPost").addEventListener("click", hideModal);
 
 // var db = firebase.database(); 
 // db.collection("users").add({

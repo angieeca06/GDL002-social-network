@@ -1,4 +1,6 @@
 let newsFeed = 
-`<div id="newsFeed">
+`<a name="#newsfeed">
+<div id="newsFeed">
 
-</div>`;
+</div>
+</a>`;
