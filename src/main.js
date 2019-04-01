@@ -131,29 +131,63 @@ const hideModal = () =>{
     document.getElementById("modal").style.display = "none";
 };
 document.getElementById("toPost").addEventListener("click", hideModal);
-
+//Almacenar los post en firebase 
 document.getElementById("toPost").addEventListener("click", () =>{
-    const userId = firebase.auth().currentUser.uid;
     const messagePost = document.getElementById("post").value;
-    db.ref("users/" + userId).child("post").push().set(messagePost);
-})
+    window.data.createPost(messagePost);
+});
 
-// var db = firebase.database(); 
-// db.collection("users").add({
-//     name: name,
-//     email: email,
-//     photo: photo,
-// })
-// .then(function(docRef) {
-//     console.log("Document written with ID: ", docRef.id);
-// })
-// .catch(function(error) {
-//     console.error("Error adding document: ", error);
+// const printPost = (userId) =>{
+//     const writePost = firebase.database().ref('users/' + userId + '/post/' );
+//     writePost.once('value', function(snapshot) {
+//         // console.log(snapshot.val());
+//         const posts = snapshot.val();
+        // console.log(JSON.stringify(posts))
+        // posts.forEach(doc => {
+        //     console.log(doc)
+        // });
+        
+        // snapshot.forEach(doc => {
+        //     console.log(doc)
+        //     console.log("uid post " + .data().post.uid)
+        //     console.log(snapshot.val());
+        // });
+        
+//         updateStarCount(postElement, snapshot.val());
 // });
+    // const post = document.getElementById("postSection");
+    // db.ref("users/" + userId).child("post").get()
+    // .then((querySnapshot) =>{
+    //     console.log(querySnapshot);
+    //     querySnapshot.forEach(doc => {
+            
+    //         post.innerHTML += `
+    //             <div id="postCreate">
+    //                 ${doc.data().name}
+    //                 ${doc.data().post}
+    //             </div>
+    //         `
+    // });
+    // document.getElementById("post").value = "";
+    // })
+    // .catch("No entra")
+// }
+
+//Para pintar los post en pantalla
+// const post = document.getElementById("postSection");
+// const userId = firebase.auth().currentUser.uid;
+// const divPost = document.createElement("div"); 
+// db.ref("users/" + userId).child("post").get()
+// .then((querySnapshot) =>{
+//     querySnapshot.forEach(doc => {
+//         post.innerHTML += `
+
+//         `
+//     });
+// })
 
 //Función para conteo de me gusta 
 // let i=0;
 // document.getElementById("heart").addEventListener("click", () => {
 //     i++;
 //     document.getElementById("hearti").innerHTML = i;
-// });
