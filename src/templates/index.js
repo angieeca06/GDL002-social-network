@@ -3,6 +3,7 @@ let contentDiv = document.getElementById('content');
 let routes = {
   '/src/index1.html': sectionLogIn,
   //'/index1.html': homepage,
+  '/index1.html': sectionSingUp,
   //'/home': homepage,
   '/src/newsfeed': newsFeed,
   '/src/profile': profile,
@@ -20,3 +21,10 @@ window.onpopstate = () => {
 
 contentDiv.innerHTML = routes[window.location.pathname];
 
+
+// if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
+//   document.getElementById("btn-test").addEventListener("click",showAnother);
+// }
+// function showAnother (){
+//   OnNavItemClick("/otro.html");
+// }

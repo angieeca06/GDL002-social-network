@@ -10,6 +10,7 @@ const lastNameUser = document.getElementById("lastNameSignUp");
 
 firebase.initializeApp(window.data.config);
 //Añadir evento al boton Sign In con correo y contraseña
+if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 btnLogin.addEventListener("click", e =>{
     const email = txtEmailLogin.value;
     const nameComplete = nameUser.value + " " + lastNameUser.value;
@@ -32,7 +33,9 @@ btnLogin.addEventListener("click", e =>{
         document.getElementById("messageEmail").innerHTML = message;
     });
 });
+};
 //Añadir evento al boton Login con correo y contraseña
+if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 btnSignUp.addEventListener("click", e=>{
     const email = txtEmailSignUp.value;
     const pass = txtPasswordSignUp.value;
@@ -52,38 +55,46 @@ btnSignUp.addEventListener("click", e=>{
         document.getElementById("messageEmailSU").innerHTML = message;
     });
 });
+};
 //Añadir evento al boton de Log Out
-btnLogOut.addEventListener("click", e =>{
-    document.getElementById("logIn").style.display = "block";
-    firebase.auth().signOut();
-});
-//Añadir un listener en tiempo real y guardar data en realtime
-firebase.auth().onAuthStateChanged( firebaseUser =>{
-    if(firebaseUser){
-        btnLogOut.classList.remove("hide");
-        document.getElementById("signUp").style.display = "none";
-        document.getElementById("logIn").style.display = "none";
-    }else{
-        btnLogOut.classList.add("hide");
-    };
-});
+// if (window.location.pathname == "/index1.html" || window.location.pathname == "/") {
+// btnLogOut.addEventListener("click", e =>{
+//     document.getElementById("logIn").style.display = "block";
+//     firebase.auth().signOut();
+// });
+// };
+// //Añadir un listener en tiempo real y guardar data en realtime
+// firebase.auth().onAuthStateChanged( firebaseUser =>{
+//     if(firebaseUser){
+//         btnLogOut.classList.remove("hide");
+//         document.getElementById("signUp").style.display = "none";
+//         document.getElementById("logIn").style.display = "none";
+//     }
+//     /*else{
+//         btnLogOut.classList.add("hide");
+//     };*/
+// });
 //Limpiar y ocultar campos de Login 
 const hideLogIn = () =>{
     txtEmailSignUp.value = "";
     txtPasswordSignUp.value = "";
     nameUser.value = "";
     lastNameUser.value = "";
-    document.getElementById("signUp").style.display = "block";
-    document.getElementById("logIn").style.display = "none"; 
+    // document.getElementById("signUp").style.display = "block";
+    // document.getElementById("logIn").style.display = "none"; 
 };
+if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 document.getElementById("linkSignUp").addEventListener("click", hideLogIn);
 //Limpiar y ocultar campos de Sign Up
 const hideSignOut = () =>{
     txtEmailLogin.value = "";
     txtPasswordLogin.value = "";
-    document.getElementById("signUp").style.display = "none";
-    document.getElementById("logIn").style.display = "block";
+    // document.getElementById("signUp").style.display = "none";
+    // document.getElementById("logIn").style.display = "block";
+    };
 };
+
+if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 document.getElementById("linkLogIn").addEventListener("click", hideSignOut);
 //Login con google
 document.getElementById("loginGoogle").addEventListener("click", function(){
@@ -97,7 +108,10 @@ document.getElementById("loginGoogle").addEventListener("click", function(){
     return result.user;
     });
 });
+};
+
 //Login con Facebook
+if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 document.getElementById("loginFacebook").addEventListener("click", function(){
     firebase.auth().signInWithPopup(window.data.providerFace).then((result) =>{
         window.data.sendDataGoogle(result.user);
@@ -109,6 +123,7 @@ document.getElementById("loginFacebook").addEventListener("click", function(){
         return result.user;
     });
 });
+};
 //Funcion para mostrar la información del perfil
 const showProfile = (name, email, photo) =>{
     document.getElementById("profile").innerHTML = ` <img width = "100px" src="${photo}"> 
@@ -123,13 +138,16 @@ const showModal =() =>{
     modal.style.display = "block";
 };
 //Evento del botón de Create post 
+if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 document.getElementById("createPost").addEventListener("click", showModal);
 //Ocultar modal 
 const hideModal = () =>{
     document.getElementById("modal").style.display = "none";
 };
+};
+if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 document.getElementById("toPost").addEventListener("click", hideModal);
-
+};
 // var db = firebase.database(); 
 // db.collection("users").add({
 //     name: name,
