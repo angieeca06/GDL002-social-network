@@ -135,7 +135,109 @@ document.getElementById("toPost").addEventListener("click", hideModal);
 document.getElementById("toPost").addEventListener("click", () =>{
     const messagePost = document.getElementById("post").value;
     window.data.createPost(messagePost);
+    document.getElementById("post") = "";
 });
+
+const printPost = firebase.database().ref('posts/');
+printPost.on('child_added', function(s) {
+    const user = s.val();
+    let section = document.createElement("section");
+    let text = document.createTextNode(user.contenido);
+    let userName = document.createTextNode(user.autor);
+    section.appendChild(userName);
+    section.appendChild(text)
+    document.getElementById("postSection").appendChild(section);
+});
+
+// firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+//     var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    // ...
+// const printPost = () =>{
+//     const post = document.getElementById("postSection");
+// const userId = firebase.auth().currentUser.uid;
+// const divPost = document.createElement("div"); 
+// db.ref("users/" + userId).child("post").get()
+// .then((querySnapshot) =>{
+//     querySnapshot.forEach(doc => {
+//         post.innerHTML += `
+
+//         `
+//     });
+// })
+
+
+
+
+
+
+
+
+// const renderPost = (doc) => {
+//     let li = document.createElement('li');
+//     let post = document.createElement('span');
+//     let deletePost = document.createElement('button');
+//     let updatePost = document.createElement('button');
+
+//     li.setAttribute('data-id', doc.id);
+//     post.textContent = doc.data().post;
+//     deletePost.textContent = 'Eliminar';
+//     updatePost.textContent = 'Editar';
+
+//     li.appendChild(post);
+//     li.appendChild(updatePost);
+//     li.appendChild(deletePost);
+//     postList.appendChild(li);
+
+//     //deleting post
+//     deletePost.addEventListener('click', (e) => {
+//         e.stopPropagation();
+//         let id = e.target.parentElement.getAttribute('data-id');
+//         db.ref('posts').doc(id).delete();
+//     })
+//     //update
+//     updatePost.addEventListener('click', (e) => {
+//         const oldElement = post;
+//         const oldText = oldElement.textContent;
+//         const newElement = document.createElement('input');
+//         newElement.type = 'text';
+//         li.appendChild(newElement);
+
+//         oldElement.replaceWith(newElement);
+//         newElement.value = oldText;
+//         const updateButton = document.createElement('button');
+//         updateButton.textContent = 'Actualizar';
+//         li.appendChild(updateButton);
+
+//         updateButton.addEventListener('click', (e) => {
+//             post.textContent = newElement.value;
+//             newElement.replaceWith(oldElement);
+//             let id = e.target.parentElement.getAttribute('data-id');
+//             console.log('id', id);
+//             e.stopPropagation();
+//             e.preventDefault();
+//             db.collection('posts').doc(id).update({
+//                 post: newElement.value
+//             });
+//             li.removeChild(updateButton);
+//         })
+
+//     })
+// }
+
+
+
+
+
+
+
+//     var userId = firebase.auth().currentUser.uid;
+// firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+//   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+//   console.log(username);
+// });
+// };
+
+
 
 // const printPost = (userId) =>{
 //     const writePost = firebase.database().ref('users/' + userId + '/post/' );
