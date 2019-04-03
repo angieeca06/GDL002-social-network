@@ -1,23 +1,23 @@
-let contentDiv = document.getElementById('content');
+let contentDiv = document.querySelector("#content");
 
 let routes = {
-  '/src/index1.html': sectionLogIn,
-  //'/index1.html': homepage,
-  '/index1.html': sectionSingUp,
+  '/src/': sectionLogIn,
+  '/src/#signUp': signUpTemplate,
+  // '/src/templates/': profile,
   //'/home': homepage,
-  '/src/newsfeed': newsFeed,
-  '/src/profile': profile,
-  '/src/menu': menu,
+  // '/src/newsfeed': newsFeed,
+  // '/src/profile': profile,
+  // '/src/menu': menu,
 };
 
 window.onpopstate = () => {
   contentDiv.innerHTML = routes[window.location.pathname];
 };
 
-// let onNavItemClick = (pathName) => {
-//   window.history.pushState({}, pathName, window.location.origin + pathName);
-//   contentDiv.innerHTML = routes[pathName];
-// }
+let onNavItemClick = (pathName) => {
+  window.history.pushState({}, pathName, window.location.origin + pathName);
+  contentDiv.innerHTML = routes[pathName];
+};
 
 contentDiv.innerHTML = routes[window.location.pathname];
 
@@ -28,3 +28,29 @@ contentDiv.innerHTML = routes[window.location.pathname];
 // function showAnother (){
 //   OnNavItemClick("/otro.html");
 // }
+
+function addEventListeners(){
+const btnList = document.querySelectorAll(".js");
+
+for (let i = 0; i < btnList.length; i++) {
+  if (window.location.pathname == '/src/index.html' ) {
+    btnList[i].addEventListener("click", function(event){
+      socialNetwork[event.target.dataset.next](documentgetElementById(event.target.attributes.dataFirst.value).value,
+      document.getElementById(event.target.attributes.dataSecond.value).value);
+    });
+  }else if (window.location.pathname == '/src/templates/singup.js') {
+    btnList[i].addEventListener("click", function(event){
+      socialNetwork[event.target.dataset.next](
+        document.getElementById(event.target.attributes.dataEmail.value).value,
+        document.getElementById(event.target.attributes.dataPass.value).value,
+        document.getElementById(event.target.attributes.dataName.value).value,
+        document.getElementById(event.target.attributes.dataLast.value).value
+      );
+    });
+  } else{
+    btnList[i].addEventListener("click", function(event){
+      socialNetwork[event.target.dataset.next]();
+    });
+  }
+}
+}

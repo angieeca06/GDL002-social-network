@@ -1,20 +1,16 @@
-const txtEmailLogin = document.querySelector("#e-mailLogIn");
-const txtPasswordLogin = document.querySelector("#passwordLogIn");
-const btnLogin = document.querySelector("#buttonLogin");
-const btnSignUp = document.querySelector("#buttonSignUp");
-const btnLogOut = document.querySelector("#buttonLogOut");
-const txtEmailSignUp = document.querySelector("#e-mailSignUp");
-const txtPasswordSignUp = document.querySelector("#passwortSignUp");
-const nameUser = document.querySelector("#nameSignUp");
-const lastNameUser = document.querySelector("#lastNameSignUp");
+const socialNetwork = {
+loginEmail: "loginEmail",
+singUp: "singUp",
+facebook: "facebook",
+google: "google",
+};
 
 firebase.initializeApp(window.data.config);
 const db = firebase.database()
 //Añadir evento al boton Sign In con correo y contraseña
-btnLogin.addEventListener("click", e =>{
-    const email = txtEmailLogin.value;
-    const pass = txtPasswordLogin.value;
+
     //Sign in  
+const loginEmail = (email , pass) => {
     firebase.auth().signInWithEmailAndPassword(email, pass)
     .then((user) => {
         db.ref("/users/" + user.uid).once("value")
@@ -32,13 +28,17 @@ btnLogin.addEventListener("click", e =>{
         const message = e.message;
         document.querySelector("#messageEmail").innerHTML = message;
     });
-});
+};
+// });
 //Añadir evento al boton Login con correo y contraseña
-btnSignUp.addEventListener("click", e=>{
-    const email = txtEmailSignUp.value;
-    const pass = txtPasswordSignUp.value;
-    const nameComplete = nameUser.value + " " + lastNameUser.value;
+
+// btnSignUp.addEventListener("click", e=>{
+//     const email = txtEmailSignUp.value;
+//     const pass = txtPasswordSignUp.value;
+//     const nameComplete = nameUser.value + " " + lastNameUser.value;
     //Login 
+const singUp = (email, pass, name1, last) => {
+    const nameComplete = name1 + last;
     firebase.auth().createUserWithEmailAndPassword(email, pass)
     .then(user =>{
         window.data.saveData(user.uid, nameComplete, user.email);
@@ -53,7 +53,8 @@ btnSignUp.addEventListener("click", e=>{
         const message = e.message;
         document.querySelector("messageEmailSU").innerHTML = message;
     });
-});
+;}
+
 //Añadir evento al boton de Log Out
 btnLogOut.addEventListener("click", e =>{
     document.querySelector("#logIn").style.display = "block";
@@ -78,17 +79,19 @@ const hideLogIn = () =>{
     document.querySelector("#signUp").style.display = "block";
     document.querySelector("#logIn").style.display = "none"; 
 };
-document.querySelector("#linkSignUp").addEventListener("click", hideLogIn);
 //Limpiar y ocultar campos de Sign Up
-const hideSignOut = () =>{
-    txtEmailLogin.value = "";
-    txtPasswordLogin.value = "";
-    document.querySelector("#signUp").style.display = "none";
-    document.querySelector("#logIn").style.display = "block";
-};
-document.querySelector("#linkLogIn").addEventListener("click", hideSignOut);
-//Login con google
+// const hideSignOut = () =>{
+//     txtEmailLogin.value = "";
+//     txtPasswordLogin.value = "";
+//     document.querySelector("#signUp").style.display = "none";
+//     document.querySelector("#logIn").style.display = "block";
+// };
+docudocument.querySelector("#linkSignUp").addEventListener("click", hideLogIn);
+ment.querySelector("#linkLogIn").addEventListener("click", hideSignOut);
+//Login 
 document.querySelector("#loginGoogle").addEventListener("click", function(){
+
+const google = () => {
     firebase.auth().signInWithPopup(window.data.provider).then(function(result){
         window.data.sendDataGoogle(result.user);
         console.log(result.user);
@@ -98,10 +101,11 @@ document.querySelector("#loginGoogle").addEventListener("click", function(){
         showProfile(name, email, photo);
     return result.user;
     });
-});
+};
 //Login con Facebook
-document.querySelector("#loginFacebook").addEventListener("click", function(){
-    firebase.auth().signInWithPopup(window.data.providerFace).then((result) =>{
+// document.querySelector("#loginFacebook").addEventListener("click", function(){
+const facebook = () => {
+firebase.auth().signInWithPopup(window.data.providerFace).then((result) =>{
         window.data.sendDataGoogle(result.user);
         console.log(result.user);
         const name = result.user.displayName;
@@ -110,7 +114,7 @@ document.querySelector("#loginFacebook").addEventListener("click", function(){
         showProfile(name, email, photo);
         return result.user;
     });
-});
+};
 //Funcion para mostrar la información del perfil
 const showProfile = (name, email, photo) =>{
     document.querySelector("#profile").innerHTML = ` <img  src="${photo}"> 

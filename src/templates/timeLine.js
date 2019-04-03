@@ -1,6 +1,6 @@
 let timeLine = 
-`<a name="#newsfeed">
-<div id="newsFeed">
+`
+<section id="postSection" class="" name="timeLine">
 
-</div>
-</a>`;
+</section>`
+;
