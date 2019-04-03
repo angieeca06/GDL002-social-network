@@ -1,41 +1,39 @@
-const txtEmailLogin = document.getElementById("e-mailLogIn");
-const txtPasswordLogin = document.getElementById("passwordLogIn");
-const btnLogin = document.getElementById("buttonLogin");
-const btnSignUp = document.getElementById("buttonSignUp");
-const btnLogOut = document.getElementById("buttonLogOut");
-const txtEmailSignUp = document.getElementById("e-mailSignUp");
-const txtPasswordSignUp = document.getElementById("passwortSignUp");
-const nameUser = document.getElementById("nameSignUp");
-const lastNameUser = document.getElementById("lastNameSignUp");
+const txtEmailLogin = document.querySelector("#e-mailLogIn");
+const txtPasswordLogin = document.querySelector("#passwordLogIn");
+const btnLogin = document.querySelector("#buttonLogin");
+const btnSignUp = document.querySelector("#buttonSignUp");
+const btnLogOut = document.querySelector("#buttonLogOut");
+const txtEmailSignUp = document.querySelector("#e-mailSignUp");
+const txtPasswordSignUp = document.querySelector("#passwortSignUp");
+const nameUser = document.querySelector("#nameSignUp");
+const lastNameUser = document.querySelector("#lastNameSignUp");
 
 firebase.initializeApp(window.data.config);
+const db = firebase.database()
 //Añadir evento al boton Sign In con correo y contraseña
-if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 btnLogin.addEventListener("click", e =>{
     const email = txtEmailLogin.value;
-    const nameComplete = nameUser.value + " " + lastNameUser.value;
     const pass = txtPasswordLogin.value;
     //Sign in  
     firebase.auth().signInWithEmailAndPassword(email, pass)
-    .then(user =>{
-        const nombre = firebase.database().ref("users/" + user.uid);
-        nombre.on("value", function(snapshot){
-            console.log(snapshot);
+    .then((user) => {
+        db.ref("/users/" + user.uid).once("value")
+        .then(function(snapshot) {
+            var username = (snapshot.val() && snapshot.val().name)  || 'Anonymous';
+            name = username;
+            email1 = email;
+            photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
+            showProfile(name, email1, photo);
         });
-        name = nameComplete;
-        email1 = email;
-        photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
-        showProfile(name, email1, photo);
+       
     })
     .catch(e => {
-        document.getElementById("messageEmail").style.display = "block";
+        document.querySelector("#messageEmail").style.display = "block";
         const message = e.message;
-        document.getElementById("messageEmail").innerHTML = message;
+        document.querySelector("#messageEmail").innerHTML = message;
     });
 });
-};
 //Añadir evento al boton Login con correo y contraseña
-if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
 btnSignUp.addEventListener("click", e=>{
     const email = txtEmailSignUp.value;
     const pass = txtPasswordSignUp.value;
@@ -47,57 +45,50 @@ btnSignUp.addEventListener("click", e=>{
         name = nameComplete;
         email1 = email;
         photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
+        post = null;
         showProfile(name, email1, photo);
     })
     .catch(e => {
-        document.getElementById("messageEmailSU").style.display = "block";
+        document.querySelector("messageEmailSU").style.display = "block";
         const message = e.message;
-        document.getElementById("messageEmailSU").innerHTML = message;
+        document.querySelector("messageEmailSU").innerHTML = message;
     });
 });
-};
 //Añadir evento al boton de Log Out
-// if (window.location.pathname == "/index1.html" || window.location.pathname == "/") {
-// btnLogOut.addEventListener("click", e =>{
-//     document.getElementById("logIn").style.display = "block";
-//     firebase.auth().signOut();
-// });
-// };
-// //Añadir un listener en tiempo real y guardar data en realtime
-// firebase.auth().onAuthStateChanged( firebaseUser =>{
-//     if(firebaseUser){
-//         btnLogOut.classList.remove("hide");
-//         document.getElementById("signUp").style.display = "none";
-//         document.getElementById("logIn").style.display = "none";
-//     }
-//     /*else{
-//         btnLogOut.classList.add("hide");
-//     };*/
-// });
+btnLogOut.addEventListener("click", e =>{
+    document.querySelector("#logIn").style.display = "block";
+    firebase.auth().signOut();
+});
+//Añadir un listener en tiempo real y guardar data en realtime
+firebase.auth().onAuthStateChanged( firebaseUser =>{
+    if(firebaseUser){
+        btnLogOut.classList.remove("hide");
+        document.querySelector("#signUp").style.display = "none";
+        document.querySelector("#logIn").style.display = "none";
+    }else{
+        btnLogOut.classList.add("hide");
+    };
+});
 //Limpiar y ocultar campos de Login 
 const hideLogIn = () =>{
     txtEmailSignUp.value = "";
     txtPasswordSignUp.value = "";
     nameUser.value = "";
     lastNameUser.value = "";
-    // document.getElementById("signUp").style.display = "block";
-    // document.getElementById("logIn").style.display = "none"; 
+    document.querySelector("#signUp").style.display = "block";
+    document.querySelector("#logIn").style.display = "none"; 
 };
-if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
-document.getElementById("linkSignUp").addEventListener("click", hideLogIn);
+document.querySelector("#linkSignUp").addEventListener("click", hideLogIn);
 //Limpiar y ocultar campos de Sign Up
 const hideSignOut = () =>{
     txtEmailLogin.value = "";
     txtPasswordLogin.value = "";
-    // document.getElementById("signUp").style.display = "none";
-    // document.getElementById("logIn").style.display = "block";
-    };
+    document.querySelector("#signUp").style.display = "none";
+    document.querySelector("#logIn").style.display = "block";
 };
-
-if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
-document.getElementById("linkLogIn").addEventListener("click", hideSignOut);
+document.querySelector("#linkLogIn").addEventListener("click", hideSignOut);
 //Login con google
-document.getElementById("loginGoogle").addEventListener("click", function(){
+document.querySelector("#loginGoogle").addEventListener("click", function(){
     firebase.auth().signInWithPopup(window.data.provider).then(function(result){
         window.data.sendDataGoogle(result.user);
         console.log(result.user);
@@ -108,11 +99,8 @@ document.getElementById("loginGoogle").addEventListener("click", function(){
     return result.user;
     });
 });
-};
-
 //Login con Facebook
-if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
-document.getElementById("loginFacebook").addEventListener("click", function(){
+document.querySelector("#loginFacebook").addEventListener("click", function(){
     firebase.auth().signInWithPopup(window.data.providerFace).then((result) =>{
         window.data.sendDataGoogle(result.user);
         console.log(result.user);
@@ -123,31 +111,33 @@ document.getElementById("loginFacebook").addEventListener("click", function(){
         return result.user;
     });
 });
-};
 //Funcion para mostrar la información del perfil
 const showProfile = (name, email, photo) =>{
-    document.getElementById("profile").innerHTML = ` <img width = "100px" src="${photo}"> 
+    document.querySelector("#profile").innerHTML = ` <img  src="${photo}"> 
     ${name}
     ${email}`;
 };
 //mostrar modal 
 const showModal =() =>{
-    var modal = document.getElementById("modal");
+    var modal = document.querySelector("#modal");
     modal.style.marginTop = "100px";
     modal.style.left = ((document.body.clientWidth-350) / 2) +  "px";
     modal.style.display = "block";
 };
 //Evento del botón de Create post 
-if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
-document.getElementById("createPost").addEventListener("click", showModal);
+document.querySelector("#createPost").addEventListener("click", showModal);
 //Ocultar modal 
 const hideModal = () =>{
-    document.getElementById("modal").style.display = "none";
+    document.querySelector("#modal").style.display = "none";
 };
-};
-if (window.location.pathname == "/index.html" || window.location.pathname == "/") {
-document.getElementById("toPost").addEventListener("click", hideModal);
-};
+document.querySelector("#toPost").addEventListener("click", hideModal);
+
+document.querySelector("#toPost").addEventListener("click", () =>{
+    const userId = firebase.auth().currentUser.uid;
+    const messagePost = document.querySelector("#post").value;
+    db.ref("users/" + userId).child("post").push().set(messagePost);
+})
+
 // var db = firebase.database(); 
 // db.collection("users").add({
 //     name: name,
@@ -163,7 +153,7 @@ document.getElementById("toPost").addEventListener("click", hideModal);
 
 //Función para conteo de me gusta 
 // let i=0;
-// document.getElementById("heart").addEventListener("click", () => {
+// document.querySelector("#heart").addEventListener("click", () => {
 //     i++;
-//     document.getElementById("hearti").innerHTML = i;
+//     document.querySelector("#hearti").innerHTML = i;
 // });

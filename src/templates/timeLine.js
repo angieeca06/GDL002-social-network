@@ -1,4 +1,4 @@
-let newsFeed = 
+let timeLine = 
 `<a name="#newsfeed">
 <div id="newsFeed">
 
