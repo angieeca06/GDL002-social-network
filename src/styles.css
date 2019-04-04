@@ -2,17 +2,13 @@
   background-color: #FCFDF7;
 }
 
-#signUp{
+/* .hide{
     display: none;
-}
+} */
 
-.hide{
+/* .message{
     display: none;
-}
-
-.message{
-    display: none;
-}
+} */
 
 .heart {
     width: 100px;
