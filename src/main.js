@@ -7,6 +7,10 @@ google: "google",
 
 firebase.initializeApp(window.data.config);
 const db = firebase.database()
+
+//Inicializar SDK
+
+
 //Añadir evento al boton Sign In con correo y contraseña
 
     //Sign in  
@@ -53,7 +57,7 @@ const singUp = (email, pass, name1, last) => {
         const message = e.message;
         document.querySelector("messageEmailSU").innerHTML = message;
     });
-;}
+};
 
 //Añadir evento al boton de Log Out
 btnLogOut.addEventListener("click", e =>{
@@ -71,7 +75,7 @@ firebase.auth().onAuthStateChanged( firebaseUser =>{
     };
 });
 //Limpiar y ocultar campos de Login 
-const hideLogIn = () =>{
+const hideLogIn = () => {
     txtEmailSignUp.value = "";
     txtPasswordSignUp.value = "";
     nameUser.value = "";
@@ -86,10 +90,12 @@ const hideLogIn = () =>{
 //     document.querySelector("#signUp").style.display = "none";
 //     document.querySelector("#logIn").style.display = "block";
 // };
-docudocument.querySelector("#linkSignUp").addEventListener("click", hideLogIn);
-ment.querySelector("#linkLogIn").addEventListener("click", hideSignOut);
+// document.querySelector("#linkSignUp").addEventListener("click", hideLogIn);
+// ment.querySelector("#linkLogIn").addEventListener("click", hideSignOut);
 //Login 
-document.querySelector("#loginGoogle").addEventListener("click", function(){
+// document.querySelector("#loginGoogle").addEventListener("click", function(){
+
+// });
 
 const google = () => {
     firebase.auth().signInWithPopup(window.data.provider).then(function(result){
@@ -140,7 +146,7 @@ document.querySelector("#toPost").addEventListener("click", () =>{
     const userId = firebase.auth().currentUser.uid;
     const messagePost = document.querySelector("#post").value;
     db.ref("users/" + userId).child("post").push().set(messagePost);
-})
+});
 
 // var db = firebase.database(); 
 // db.collection("users").add({
@@ -160,4 +166,10 @@ document.querySelector("#toPost").addEventListener("click", () =>{
 // document.querySelector("#heart").addEventListener("click", () => {
 //     i++;
 //     document.querySelector("#hearti").innerHTML = i;
+// });
+// const admin = require('firebase-admin');
+// const serviceAccount = require('path/to/serviceAccountKey.json');
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
 // });
