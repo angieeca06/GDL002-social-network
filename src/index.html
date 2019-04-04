@@ -1,49 +1,19 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" dir="ltr">
     <head>
         <title>Parentips</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css" />
-        <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
     </head>
     <body>
         <main>
-            <section name="logIn" id="logIn" class="LogIn">
-                <img src="Imges\Logo.png"><br>
-                <input id="e-mailLogIn" type="email" autofocus placeholder="E-mail"><br>
-                <a id="messageEmail" class="message"></a>
-                <input id="passwordLogIn" type="password" autofocus placeholder="Password"><br>
-                <button class="buttonRegister" id="buttonLogin">Ingresar</button>
-                <button id="loginGoogle">Inicia con Google</button><br>
-                <button id="loginFacebook">Inicia con Facebook</button><br>
-                <a href="#signUp" id="linkSignUp" class="links">No tienes una cuenta? <br> Registrate¡</a>
-                <!-- <div id="heart" class="heart"></div>
-                <div id="hearti"></div> -->
-            </section>
-            <section name="signUp" id="signUp" >
-                <input id="nameSignUp" type="text" autofocus placeholder="First name"><br>
-                <input id="lastNameSignUp" type="text" autofocus placeholder="Last name"><br>
-                <input id="e-mailSignUp" type="email" autofocus placeholder="E-mail"><br>
-                <a id="messageEmailSU" class="message"></a>
-                <input id="passwortSignUp" type="password" autofocus placeholder="Passwrod"><br>
-                <button class="buttonRegister" id="buttonSignUp">Registrarme</button>
-                <div id="root"></div>
-                <a href="#logIn" id="linkLogIn" class="links">Ya tienes una cuenta?</a>
-            </section>
-            <section id="LogOut">
-                <!-- <button id="btnProfile">Perfil</button> -->
-                <div id="profile"></div>
-                <button id="buttonLogOut" class="hide">Cerrar sesión</button>
-            </section>
-            <button id="createPost">Crear una publicación</button>
-                <section id="modal" class="modal">
-                    <input type="text" id="post">
-                    Aquí pones tu contenido web
-                    <button id="toPost">Publicar</button>
-                </section>
+            <div id="content">
+            </div>
         </main>
-        
+        <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+        <script type="text/javascript" src="templates/index.js"></script>
         <script type="text/javascript" src="data.js"></script>
         <script type="text/javascript" src="main.js"></script>
     </body>
