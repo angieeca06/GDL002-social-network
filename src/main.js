@@ -6,15 +6,15 @@ const loginEmail = (email, pass) => {
         .then((user) => {
             onNavItemClick('//timeLine');
             db.ref("/users/" + user.uid).once("value")
-                .then(function (snapshot) {
-                    var username = (snapshot.val() && snapshot.val().name) || 'Anonymous';
-                    console.log(snapshot.val())
-                    name = username;
-                    email1 = email;
-                    photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
-                    showProfile(name, email1, photo);
-
-                });
+            .then(function (snapshot) {
+                var username = (snapshot.val() && snapshot.val().name) || 'Anonymous';
+                console.log(snapshot.val());
+                name = username;
+                email1 = email;
+                photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
+            }).then(()=>{
+                timeLinePosts(); 
+            });
         })
         .catch(e => {
             document.querySelector("#messageEmail").style.display = "block";
@@ -32,8 +32,8 @@ const signUp = (email, pass, name1, last) => {
             name = nameComplete;
             email1 = email;
             photo = "https://drogaspoliticacultura.net/wp-content/uploads/2017/09/placeholder-user.jpg";
-            post = null;
-            showProfile(name, email1, photo);
+        }).then(()=>{
+            timeLinePosts(); 
         })
         .catch(e => {
             document.querySelector("#messageEmailSU").style.display = "block";
@@ -56,6 +56,7 @@ const logOut = () => {
 //     }else{
 //         btnLogOut.classList.add("hide");
 //     };
+// });
 //Login con google
 const google = () => {
     firebase.auth().signInWithPopup(window.data.provider).then(function (result) {
@@ -73,21 +74,27 @@ const facebook = () => {
     firebase.auth().signInWithPopup(window.data.providerFace).then((result) => {
         onNavItemClick('/timeLine');
         window.data.sendDataGoogle(result.user);
-        console.log(result.user);
-        const name = result.user.displayName;
-        const email = result.user.email;
-        const photo = result.user.photoURL;
-        timeLinePosts();
-        // showProfile(name, email, photo);
         return result.user;
+    }).then(()=>{
+        timeLinePosts();
     });
 };
 //Funcion para mostrar la información del perfil
-const showProfile = (name, email, photo) => {
-    document.querySelector("#profile").innerHTML = ` <img  src="${photo}"> 
-    ${name}
-    ${email}`;
+const showProfile = () => {
+    onNavItemClick('/profile')
+    const user = firebase.auth().currentUser;
+    const printPost = firebase.database().ref('users/' + user.uid);
+    printPost.once("value",function (s) {
+            const name = user.displayName;
+            const email = user.email;
+            const photo = user.photoURL;
+            const profileTemplate = document.getElementById("profile");
+            profileTemplate.innerHTML = ` <img  src="${photo}"> 
+            ${name}
+            ${email}`; 
+    });
 };
+
 //mostrar modal 
 const showModal = () => {
     var modal = document.querySelector("#modal");
@@ -123,7 +130,7 @@ const timeLinePosts = () => {
         section.appendChild(btnUpdate);
         section.appendChild(btnDelete);
         baseRoute.appendChild(section);
-    })
+    });
 };
 //Quitar las comillas a la las rutas 
 const socialNetwork = {
@@ -132,6 +139,10 @@ const socialNetwork = {
     "google": google,
     "facebook": facebook,
     "timeLine": timeLinePosts,
+    "showProfile": showProfile,
+    "logOut": logOut,
+
+
 };
 
 
