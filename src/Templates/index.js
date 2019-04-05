@@ -4,7 +4,8 @@ let routes = {
     "/src/" : "./templates/login.html",
     "/signUp" : "./src/templates/signUp.html",
     "/timeLine": "./src/templates/timeLine.html",
-    // "/src/#google" : timeLine,
+    "/profile" : "./src/templates/profile.html",
+
     // "src/"
     // "/src/"
 };
