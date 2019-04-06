@@ -4,10 +4,7 @@ let routes = {
     "/src/" : "./templates/login.html",
     "/signUp" : "./src/templates/signUp.html",
     "/timeLine": "./src/templates/timeLine.html",
-    "/profile" : "./src/templates/profile.html",
-
-    // "src/"
-    // "/src/"
+    "/profile" : "./src/templates/profile.html"  
 };
 
 window.onpopstate = () => {
