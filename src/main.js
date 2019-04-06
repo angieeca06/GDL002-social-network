@@ -43,7 +43,7 @@ const signUp = (email, pass, name1, last) => {
 };
 //Añadir evento al boton de Log Out
 const logOut = () => {
-    document.querySelector("#logIn").style.display = "block";
+    onNavItemClick('/src/');
     firebase.auth().signOut();
 };
 //Añadir un listener en tiempo real y guardar data en realtime
@@ -97,16 +97,20 @@ const showProfile = () => {
 
 //mostrar modal 
 const showModal = () => {
-    var modal = document.querySelector("#modal");
+    // onNavItemClick('/post');
+    let modal = document.getElementById("modal");
+    console.log(modal);
     modal.style.marginTop = "100px";
     modal.style.left = ((document.body.clientWidth - 350) / 2) + "px";
     modal.style.display = "block";
 };
 //Almacenar los post en firebase 
 const savePost = () => {
+    let modal = document.getElementById("modal");
     let messagePost = document.querySelector("#post").value;
     window.data.createPost(messagePost);
     document.querySelector("#post").value = "";
+    modal.style.display = "none";
 };
 //Mostrar los post en pantalla
 const timeLinePosts = () => {
@@ -141,11 +145,8 @@ const socialNetwork = {
     "timeLine": timeLinePosts,
     "showProfile": showProfile,
     "logOut": logOut,
-
-
+    "savePost": savePost
 };
-
-
 
 //Función para conteo de me gusta 
 // let i=0;
@@ -153,18 +154,3 @@ const socialNetwork = {
 //     i++;
 //     document.querySelector("#hearti").innerHTML = i;
 
-//Limpiar y ocultar campos de Login 
-// const hideLogIn = () =>{
-//     txtEmailSignUp.value = "";
-//     txtPasswordSignUp.value = "";
-//     nameUser.value = "";
-//     lastNameUser.value = "";
-//     document.querySelector("#signUp").style.display = "block";
-//     document.querySelector("#logIn").style.display = "none"; 
-// };
-
-//Ocultar modal 
-// const hideModal = () =>{
-//     document.querySelector("#modal").style.display = "none";
-// };
-// document.querySelector("#toPost").addEventListener("click", hideModal);
