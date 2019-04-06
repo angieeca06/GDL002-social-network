@@ -153,3 +153,4 @@ const socialNetwork = {
 // document.querySelector("#heart").addEventListener("click", () => {
 //     i++;
 //     document.querySelector("#hearti").innerHTML = i;
+
